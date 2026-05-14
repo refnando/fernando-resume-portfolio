@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import SkillsPage from './pages/SkillsPage';
@@ -6,10 +6,12 @@ import ProjectsPage from './pages/ProjectsPage';
 import ContactPage from './pages/ContactPage';
 import MindmapPage from './pages/MindmapPage';
 
-function App() {
+function AppLayout() {
+  const location = useLocation();
+  const hideNav = location.pathname === '/mindmap';
   return (
-    <BrowserRouter>
-      <Navbar />
+    <>
+      {!hideNav && <Navbar />}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/skills" element={<SkillsPage />} />
@@ -17,6 +19,14 @@ function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/mindmap" element={<MindmapPage />} />
       </Routes>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppLayout />
     </BrowserRouter>
   );
 }
